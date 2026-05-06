@@ -1,0 +1,9 @@
+fastapi[standard]
+pymysql
+uvicorn
+python-jose == 3.3.0
+sqlmodel
+pwdlib[argon2]
+cloudinary
+requests
+pydantic_settings
