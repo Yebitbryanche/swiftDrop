@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import routes
+from routes.routes import router
 from models.models import Users, Delivery, Notification, Ratings   # should be imported like so
 from db import create_Tables
 from _config import cloudinary_config
@@ -19,7 +19,7 @@ app.add_middleware(
 def on_startup():
     create_Tables()
 
-app.include_router(routes.router)
+app.include_router(router)
 
 # check if app is running
 @app.get('/')
