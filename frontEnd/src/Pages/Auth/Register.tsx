@@ -1,7 +1,7 @@
 import { useState } from "react";
 import InputField from "../../Components/UI/input/InputField";
 import { createAccount } from "../../Components/Design/requests";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../Components/UI/loader/Loader";
 import { useToast } from "../../context/toastContext";
 
@@ -15,17 +15,10 @@ export default function RegisterPage() {
   const [deliver_fee, setDelivery_fee] = useState<number>(0)
   const [working_hours, setWorking_hours] = useState('')
   const [Vehicle,setVehicle] = useState('')
-  const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false)
   const {showToast} = useToast()
   const navigate = useNavigate()
 
-  const handleImageChange = (e:any) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
-    }
-  };
 
 const handleRegister = async (e: any) => {
   e.preventDefault(); // move this to the top
@@ -101,25 +94,6 @@ const handleRegister = async (e: any) => {
           Join and start delivering or receiving packages easily
         </p>
 
-        {/* Profile Upload */}
-        <div className="flex flex-col items-center mb-6">
-          <div className="w-24 h-24 rounded-full bg-gray-100 overflow-hidden flex items-center justify-center shadow-sm">
-            {image ? (
-              <img src={image} alt="preview" className="w-full h-full object-cover" />
-            ) : (
-              <span className="text-gray-400 text-sm">Upload</span>
-            )}
-          </div>
-
-          <label className="mt-3 cursor-pointer text-yellow-600 text-sm font-medium">
-            Choose Profile Picture
-            <input
-              type="file"
-              className="hidden"
-              onChange={handleImageChange}
-            />
-          </label>
-        </div>
 
         {/* Form */}
         <form className="space-y-4">
@@ -218,9 +192,9 @@ const handleRegister = async (e: any) => {
         {/* Footer */}
         <p className="text-center text-sm text-gray-500 mt-6">
           Already have an account?{" "}
-          <span className="text-yellow-600 font-medium cursor-pointer">
+          <Link to={'/login'} className="text-yellow-600 font-medium cursor-pointer">
             Login
-          </span>
+          </Link>
         </p>
       </div>
       {

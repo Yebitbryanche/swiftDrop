@@ -53,7 +53,7 @@ class Delivery(SQLModel, table=True):
 
     itemImage_url: Optional[str] = Field(default=None)
 
-    user_id: uuid.UUID = Field(foreign_key="users.id")
+    user_id: Optional[uuid.UUID] = Field(foreign_key="users.id")
     agent_id: Optional[uuid.UUID] = Field(default=None, foreign_key="users.id")
     created_at : datetime = Field(default_factory=datetime.utcnow)
     average_time : Optional[int] = Field(default=None)
@@ -77,6 +77,8 @@ class Notification(SQLModel,table=True):
     user_id: uuid.UUID = Field(foreign_key="users.id")
     agent_id: Optional[uuid.UUID] = Field(default=None, foreign_key="users.id")
     created_at : datetime = Field(default_factory=datetime.utcnow)
+
+    delivery_id: Optional[uuid.UUID] = None  # 👈 ADD THIS
 
 
 

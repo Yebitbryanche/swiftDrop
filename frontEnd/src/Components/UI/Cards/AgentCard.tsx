@@ -12,6 +12,7 @@ interface AgentCardProps {
   rating: number;
   key:string;
   onOrder?: () => void;
+  profile_url:string
 }
 
 const AgentCard = ({
@@ -22,15 +23,18 @@ const AgentCard = ({
   location,
   rating,
   onOrder,
-  key,
+  profile_url,
 }: AgentCardProps) => {
   return (
-    <div key={key} className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-4">
+    <div className="bg-white shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl p-4">
 
       {/* Top section */}
       <div className="flex justify-between items-start">
         <div className="flex gap-3">
-          <Profile className="w-[75px] h-[75px] sm:w-[85px] sm:h-[85px] rounded-xl shadow-sm bg-gray-50 p-1" />
+          {!profile_url?
+            <Profile className="w-[75px] h-[75px] sm:w-[85px] sm:h-[85px] rounded-xl shadow-sm bg-gray-50 p-1" />:
+            <img src={profile_url} className="w-[75px] h-[75px] sm:w-[85px] sm:h-[85px] rounded-xl shadow-sm bg-gray-50 p-1"/>
+            }
 
           <div className="space-y-1">
             <h3 className="font-semibold text-gray-800 text-lg">

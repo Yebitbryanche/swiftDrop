@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routes import routes
 from models.models import Users, Delivery, Notification, Ratings   # should be imported like so
 from db import create_Tables
+from _config import cloudinary_config
 
 app = FastAPI()
 

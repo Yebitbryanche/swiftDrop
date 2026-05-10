@@ -7,11 +7,14 @@ import type { AgentType } from '../../types/userTypes';
 import apiClient from '../../apiClient';
 import Pagination from '../../Components/Design/pagination';
 import Loader from '../../Components/UI/loader/Loader';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import emptyState from '../../assets/images/undraw_remote-cabin_6x4q.png'
+import { useAuth } from '../../hooks/AuthHook';
 
 const Home = () => {
   const [agents, setAgents] = useState<AgentType[]>([]);
   const [page, setPage] = useState(1);
+  const {user, fetchuser} = useAuth()
   const [limit] = useState(10);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -47,6 +50,7 @@ const fetchAgents = async (pageNumber: number) => {
 
 useEffect(() => {
   fetchAgents(page);
+  fetchuser()
 }, [page]);
 
 const totalPages = Math.ceil(total / limit);
@@ -60,11 +64,12 @@ const totalPages = Math.ceil(total / limit);
             <div className='p-2 rounded-full bg-green-100'>
                 <HiSearch size={25} color="#21b723"/>
             </div>
-      </div>
+        </div>
       {/** search container */}
       <div className='flex w-full flex-row justify-center gap-x-5 items-center'>
         <div className='shadow-sm inset-sm rounded-full cursor-pointer'>
-          <Profile className='md:w-[50px] md:h-[50px] w-[40px] h-[40px]'/>
+          {user?.profile_url?<img src={user.profile_url} className='md:w-[50px] md:h-[50px] w-[40px] h-[40px]'/>:
+          <Profile className='md:w-[50px] md:h-[50px] w-[40px] h-[40px]'/>}
         </div>
         <div className='w-[80%] relative'>
           <input 
@@ -76,7 +81,18 @@ const totalPages = Math.ceil(total / limit);
       </div>
 
       {/** content */}
-      {
+      {agents.length === 0?
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="w-[60%] flex flex-col items-center gap-y-2 text-center">
+            <img src={emptyState} className="w-full" />
+            <h3 className="font-medium md:text-2xl sm:text-md text-sm">
+              Agents are on the way!
+            </h3>
+            <p className="md:text-md sm:text-sm text-xs text-gray-500">
+              You will see all agents here
+            </p>
+          </div>
+        </div>:
         <div className='grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 mt-10'>
           {agents.map((item) => (
 
@@ -87,6 +103,7 @@ const totalPages = Math.ceil(total / limit);
               deliveryTime={item.agent.working_hours}
               vehicle={item.agent.vehicle}
               rating={item.agent.rating}
+              profile_url={item.agent.profile_url}
               location={item.agent.office_location}
               onOrder={() => placeOrder(item.agent.id)}
               />

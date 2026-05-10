@@ -24,7 +24,7 @@ export const createAccount = async (
             working_hours,
             vehicle_type
         })
-        console.log(response.data)
+        //console.log(response.data)
         return (response.data)
     }
     catch(error:any){
@@ -41,7 +41,7 @@ export const loginRequest = async (email:string,password:string) => {
             email,
             password
         })
-        console.log(response.data)
+        //console.log(response.data)
         return response
     }
     catch(error:any){
@@ -66,7 +66,7 @@ export const place_orderRequest =  async (
         delivery_location,
         item_type
        })
-       console.log(response.data)
+      // console.log(response.data)
        return response
     }
     catch(error:any){
@@ -75,3 +75,75 @@ export const place_orderRequest =  async (
     }
 
 }
+
+// get Notifications
+
+export const getAgentNotifications = async (id:string | undefined) => {
+    try{
+        const response = await apiClient.get(`/notification/${id}`)
+       // console.log(response.data)
+        return response
+    }
+    catch(error:any){
+        console.error(error.response.data)
+        throw error
+    }
+}
+
+
+export const markNotificationAsRead = async (
+  notificationId: string
+) => {
+    try{
+        const response = apiClient.post(`/read/${notificationId}`);
+        return response
+    }
+    catch(error:any){
+        console.error(error.response.data)
+        throw error
+    } 
+};
+
+export const cancleRequest = async (delivery_id:string) => {
+    try{
+        const response = apiClient.post(`/${delivery_id}/decline`)
+        return response
+    }
+    catch(error:any){
+        console.error(error.response.data)
+        throw error
+    }
+}
+
+// toggle active status
+
+export const toggleStatus = async (user_id:string | undefined) => {
+    try{
+        const response = apiClient.patch(`/${user_id}/toggle-status`)
+        return response
+    }
+    catch(error:any){
+        console.error(error.response.data)
+    }
+}
+
+
+export const uploadAvatar = async (
+  userId: string | undefined,
+  image: File
+) => {
+
+  const formData = new FormData();
+
+  formData.append("file", image);
+
+  return apiClient.post(
+    `upload_avatar/${userId}`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+};

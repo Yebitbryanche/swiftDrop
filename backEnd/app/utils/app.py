@@ -8,6 +8,7 @@ from sqlmodel import select
 from fastapi import Depends, HTTPException
 from models.models import Users
 from pydantic import EmailStr
+import cloudinary.uploader as uploader
 
 
 
@@ -35,7 +36,7 @@ def create_access_token(data:dict,expires_delta:timedelta | None = None):
     if expires_delta:
         expires_in = datetime.now(timezone.utc) + expires_delta   # sets the expiry time for the future
     else:
-        expires_in = datetime.now(timezone.utc) + timedelta(days = settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        expires_in = datetime.now(timezone.utc) + timedelta(minutes = settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({'exp':expires_in})
 
     return jwt.encode(
@@ -92,3 +93,11 @@ def get_current_user(
         raise credentials_exception
 
     return user
+
+
+
+async def upload_file(file):
+    image_file = await file.read()
+    result = uploader.upload(image_file)
+    return result["secure_url"]
+

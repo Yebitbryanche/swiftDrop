@@ -1,23 +1,23 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import Notifications from "./Pages/Common/Notifications"
 import FAQ from "./Pages/Common/FAQ"
 import Home from "./Pages/Common/Home"
 import Navigation from "./Containers/Navigation"
-import Nearby from "./Pages/Common/Nearby"
 import OrderHistory from "./Pages/Common/OrderHistory"
 import RegisterPage from "./Pages/Auth/Register"
 import LoginPage from "./Pages/Auth/Login"
 import AgentDetailPage from "./Pages/Others/AgentProfile"
 import CreateDelivery from "./Pages/Others/CreateDelivery"
+import Profile from "./Pages/Common/profile"
+import Upload_Avatar from "./Pages/Others/Upload_avatarPage"
+
 
 function App() {
   return (
     <div>
-      <BrowserRouter>
       <Navigation/>
         <Routes>
           <Route path="/" element={<Home/>}/>
-          <Route path="/nearby" element={<Nearby/>}/>
           <Route path="/faq" element={<FAQ/>}/>
           <Route path="/orderhistory" element={<OrderHistory/>}/>
           <Route path="/notifications" element={<Notifications/>}/>
@@ -25,9 +25,10 @@ function App() {
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/agent" element={<AgentDetailPage/>}/>
           <Route path="/create_delivery/:agent_id" element={<CreateDelivery/>}/>
+          <Route path="/profile" element={<Profile/>}/>
+          <Route path="/upload_avatar" element={<Upload_Avatar/>}/>
 
         </Routes>
-      </BrowserRouter>
     </div>
   )
 }

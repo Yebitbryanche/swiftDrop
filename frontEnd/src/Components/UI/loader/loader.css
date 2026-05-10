@@ -1,7 +1,7 @@
 /* From Uiverse.io by Nawsome */ 
 .loadingspinner {
-  --square: 26px;
-  --offset: 30px;
+  --square: clamp(16px, 3vw, 26px);
+  --offset: clamp(18px, 4vw, 30px);
   --duration: 2.4s;
   --delay: 0.2s;
   --timing-function: ease-in-out;

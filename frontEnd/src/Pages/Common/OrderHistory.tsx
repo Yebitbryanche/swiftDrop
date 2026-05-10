@@ -4,7 +4,7 @@ import { HiListBullet } from 'react-icons/hi2'
 import DeliveryHistoryCard from "../../Components/UI/Cards/OrderHistoryCard"
 
 const OrderHistory = () => {
-  const [orders, setOrders] = useState(true)
+  const [orders, setOrders] = useState(false)
   return (
     <div className='p-3'>
         <div className='flex flex-row gap-x-2 items-center'>
@@ -16,11 +16,15 @@ const OrderHistory = () => {
             </div>
       </div>
       {!orders?
-        <div className="relative">
-          <div className="w-[60%] absolute top-5 left-[20%] flex flex-col items-center gap-y-2" >
-              <img src={history} className="w-full"/>
-              <h3 className="font-medium md:text-2xl sm:text-md text-sm">Nothing Here!</h3>
-              <p className="md:text-md sm:text-sm text-xs text-gray-500 text-center">place an order to see your order history here</p>
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="w-[60%] flex flex-col items-center gap-y-2 text-center">
+            <img src={history} className="w-full" />
+            <h3 className="font-medium md:text-2xl sm:text-md text-sm">
+              Nothing Here!
+            </h3>
+            <p className="md:text-md sm:text-sm text-xs text-gray-500">
+              Place an order to see your order history here
+            </p>
           </div>
         </div>
         :
@@ -29,6 +33,7 @@ const OrderHistory = () => {
         <DeliveryHistoryCard/>
         </div>
         }
+        <button onClick={() => setOrders(!orders)}>toggle order</button>
     </div>
   )
 }

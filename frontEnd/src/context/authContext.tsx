@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import type { UserTypes } from "../types/userTypes";
 import apiClient from "../apiClient";
 import { loginRequest } from "../Components/Design/requests";
+import { useNavigate } from "react-router-dom";
 
 type AuthContextType = {
     user:UserTypes | null
@@ -10,7 +11,7 @@ type AuthContextType = {
     login:(a:string, b:string) => Promise<void>
     fetchuser: () => void;
     logout: () => void;
-}
+} 
 
 
 export const AuthContext = createContext<AuthContextType| undefined>(undefined)
@@ -18,6 +19,7 @@ export const AuthContext = createContext<AuthContextType| undefined>(undefined)
 export const AuthProvider = ({children}:any) => {
     const [user, setUser] = useState<UserTypes | null>(null)
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
 
     const fetchuser = async() => {
         try{
@@ -29,7 +31,7 @@ export const AuthProvider = ({children}:any) => {
             }
 
             const response = await apiClient.get('/user/me')
-            console.log(response.data)
+            //console.log(response.data)
             setUser(response.data)
         }
         catch(error:any){
@@ -48,14 +50,15 @@ export const AuthProvider = ({children}:any) => {
     }
 
     const login = async (email:string, password:string) => {
-        try{
-        const response = await loginRequest(email, password)
+        try {
+            const response = await loginRequest(email, password)
             const token = response.data.access_token;
+            console.log(response.data)
             localStorage.setItem('userToken', token)
-            //await fetchuser()
-        }
-        catch(error:any){
-            console.error(error.response.data)
+
+            await fetchuser() // ✅ now user is set
+        } catch(error:any) {
+            console.error(error.response?.data)
             throw error
         }
     }
@@ -63,6 +66,12 @@ export const AuthProvider = ({children}:any) => {
     useEffect(()=>{
         fetchuser()
     },[])
+
+    useEffect(() => {
+        if (!loading && !user) {
+            navigate('/login')
+        }
+    }, [loading, user])
 
     // context provider
     return (
