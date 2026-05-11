@@ -9,7 +9,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], #this allows us to access our frontend 
+    allow_origins=["https://swift-drop-eight.vercel.app","http://localhost:5173"], #this allows us to access our frontend 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
