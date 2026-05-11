@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
-from db import SessionDep
+from app.db import SessionDep
 from uuid import UUID
-from schema.index import CreateUser, LoginRequest, RequestDelivery
-from models.models import Users, Delivery, Ratings, Notification
+from app.schema.index import CreateUser, LoginRequest, RequestDelivery
+from app.models.models import Users, Delivery, Ratings, Notification
 from sqlmodel import select, func
-from config import settings
+from app.config import settings
 
-from utils.app import hash_password, authenticate_user, create_access_token, get_current_user, upload_file
+from app.utils.app import hash_password, authenticate_user, create_access_token, get_current_user, upload_file
 
 router = APIRouter(
     prefix="/app/v1",

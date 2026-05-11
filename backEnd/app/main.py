@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes.routes import router
-from models.models import Users, Delivery, Notification, Ratings   # should be imported like so
-from db import create_Tables
-from _config import cloudinary_config
+from app.routes.routes import router
+from app.models.models import Users, Delivery, Notification, Ratings   # should be imported like so
+from app.db import create_Tables
+from app._config import cloudinary_config
 
 app = FastAPI()
 

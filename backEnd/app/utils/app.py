@@ -1,12 +1,12 @@
 from pwdlib import PasswordHash
 from datetime import datetime, timedelta, timezone
 from fastapi.security import OAuth2PasswordBearer
-from config import settings
+from app.config import settings
 from jose import JWTError, jwt
-from db import SessionDep
+from app.db import SessionDep
 from sqlmodel import select
 from fastapi import Depends, HTTPException
-from models.models import Users
+from app.models.models import Users
 from pydantic import EmailStr
 import cloudinary.uploader as uploader
 
