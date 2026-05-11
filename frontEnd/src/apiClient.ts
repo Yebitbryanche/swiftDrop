@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const API_URL = "http://127.0.0.1:8000/app/v1"; // backend url
+export const API_URL = "https://swiftdrop-kuor.onrender.com"; // backend url
 
 const apiClient = axios.create({
   baseURL: API_URL,
